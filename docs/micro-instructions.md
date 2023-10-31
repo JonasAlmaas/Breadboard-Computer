@@ -104,3 +104,10 @@ Every instruction starts by running the fetch sequence.
 | Opcode | Cycle         | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :-----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | 1111   | 0010&nbsp;(2) | | X   |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
+
+
+# Micro Instruction EEPROM Connections
+
+| A9  | A8  | A7  | A6  | A5  | A4  | A3  | A2  | A1  | A0  |
+| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | 
+|     | ZF  | CF  | OP3 | OP2 | OP1 | OP0 | t2  | t1  | t0  |
