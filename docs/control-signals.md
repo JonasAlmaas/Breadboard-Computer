@@ -18,4 +18,4 @@
 | PCO  | Program Counter Out             | Output the Program counter onto the Bus.                                                       |
 | PCE  | Program Counter Enable          | Advance the Program Counter on the next cycle.                                                 |
 | MCR  | Micro Instruction Counter Reset | Resets the Micro Instruction Counter.                                                          |
-| SFI  | Status Flag Register In         | Update the Status Flag Register.                                                               |
+| SFE  | Status Flag Register Enable     | Update the Status Flag Register.                                                               |

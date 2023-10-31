@@ -14,6 +14,8 @@
 | SUB | Subtract       | **0011**'kkkk | 5      | Load value from RAM into Register B. <br> Subtract Register B from A. |
 | STA | Store A        | **0100**'kkkk | 4      | Store value from Register A into RAM.                                 |
 | LDI | Load Immediate | **0101**'KKKK | 3      | Load Immediate into Register A.                                       |
-| JMP | Jump           | **0111**'kkkk | 3      | Set the value of the Program Counter.                                 |
+| JMP | Jump           | **0110**'kkkk | 3      | Set the value of the Program Counter.                                 |
+| JC  | Jump If Carry  | **0111**'kkkk | 3      | Jump if Carry flag is set.                                            |
+| HZ  | Jump If Zero   | **1000**'kkkk | 3      | Jump if Zero flag is set.                                             |
 | OUT | Output         | **1110**'xxxx | 3      | Load Output Register With Register A.                                 |
 | HLT | Halt           | **1111**'xxxx | 3      | Halt Execution.                                                       |
