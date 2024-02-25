@@ -1,0 +1,5 @@
+0000 0001'1110        1: LDA 14   ; Load Register A with the value at memory Location 14
+                      3: loop:
+0001 0010'1111        4: ADD 15   ; Add the value at memory Location 15 to Register A
+0010 1110'0000        5: OUT      ; Output the value in Register A
+0011 0110'0001        6: JMP loop
