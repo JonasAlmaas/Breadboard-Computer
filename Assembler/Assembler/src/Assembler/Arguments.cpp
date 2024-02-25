@@ -10,7 +10,13 @@ Arguments parseArguments(int argc, char** argv)
 	for (int i = 0; i < argc; ++i) {
 		value = argv[i];
 
-		args.List.push_back(std::string(value));
+		std::string strValue = std::string(value);
+
+		args.List.push_back(strValue);
+		
+		if (value[0] == '-' && !args.Flags.contains(strValue)) {
+			args.Flags.insert(strValue);
+		}
 
 		if (strcmp(value, "-o") == 0 ||
 			strcmp(value, "-f") == 0) {

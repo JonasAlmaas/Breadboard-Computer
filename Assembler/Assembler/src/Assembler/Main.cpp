@@ -7,14 +7,14 @@
 int main(int argc, char** argv)
 {
 	if (argc == 1) {
-		std::cout << "Usage: Assembler [options] file.asm\n" << std::endl;
-		std::cout << "Type 'Assembler -h' for help." << std::endl;
+		std::cout << "Usage: Assembler [options] file.asm\n\n";
+		std::cout << "Type 'Assembler -h' for help.\n";
 		return 1;
 	}
 
 	Arguments args = parseArguments(argc, argv);
 
-	if (args.Table.contains("-h")) {
+	if (args.Flags.contains("-h")) {
 		cli_printHelp();
 		return 0;
 	}

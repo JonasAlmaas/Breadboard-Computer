@@ -5,8 +5,9 @@
 
 namespace Utils {
 
-	static std::string binaryString(uint32_t value, uint8_t bitCount = 8, uint8_t tickOffset = 0) {
-		char result[256];
+	static std::string binaryString(uint32_t value, uint8_t bitCount = 8, uint8_t tickOffset = 0)
+	{
+		char result[256]{};
 		char* head = result;
 
 		for (int i = bitCount - 1; i >= 0; i--) {
@@ -23,6 +24,7 @@ namespace Utils {
 		
 		return std::string(result);
 	}
+	
 }
 
 OutputFormat getOutputFormat(const Arguments& args)
