@@ -13,7 +13,6 @@ The order order specified here is the same as the control word. HLT is LSB whils
 | AI   | A Register In                   | Load Register A from the Bus.                                                                  |
 | AO   | A Register Out                  | Output the A Register onto the Bus.                                                            |
 | BI   | B Register In                   | Load Register B from the Bus.                                                                  |
-| BO   | B Register Out                  | Output the B Register onto the Bus.                                                            |
 | ΣO   | Sum Out                         | Output the Sum Register onto the Bus.                                                          |
 | SU   | Subtract                        | Whether To Subtract Register A and B or not.                                                   |
 | OI   | Output Register In              | Load the Output Register from the Bus.                                                         |
