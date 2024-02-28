@@ -110,14 +110,16 @@ static void writeDebug(
 		if (!line.DebugLine) {
 			file <<
 				Utils::binaryString(address++, 4) << " " <<
-				Utils::binaryString(line.MachineCode, 8, 4) <<
-				"        ";
-		}
-		else {
-			file << "                      ";
+				Utils::binaryString(line.MachineCode, 8, 4);
+		} else {
+			file << "              ";
 		}
 
-		file << line.LineNumber << ": " << line.SourceCode << '\n';
+		if (line.LineNumber != -1) {
+			file << "        " << line.LineNumber << ": " << line.SourceCode;
+		}
+
+		file << '\n';
 	}
 }
 

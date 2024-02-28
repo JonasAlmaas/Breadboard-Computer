@@ -8,7 +8,7 @@ struct AssemblyLine
 {
 	bool DebugLine;
 	uint32_t Address;
-	uint32_t LineNumber;
+	int32_t LineNumber;
 	std::string SourceCode;
 	uint8_t MachineCode;
 };
@@ -31,6 +31,5 @@ private:
 	std::filesystem::path m_Path;
 
 	std::vector<AssemblyLine> m_Output;
-	std::unordered_map<std::string, uint8_t> m_LabelTable;
 	
 };
