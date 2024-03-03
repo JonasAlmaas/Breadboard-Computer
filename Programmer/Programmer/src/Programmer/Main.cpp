@@ -76,7 +76,7 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	char programData[15];
+	char programData[10];
 	char responseBuffer[256];
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(50));
