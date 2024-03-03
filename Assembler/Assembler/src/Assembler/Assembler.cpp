@@ -83,7 +83,7 @@ Assembler::Assembler(const std::filesystem::path& path)
 			
 			continue;
 		}
-
+		
 		size_t instructionSplitPos = line.find_first_of(' ');
 		std::string instruction = line.substr(0, instructionSplitPos);
 
