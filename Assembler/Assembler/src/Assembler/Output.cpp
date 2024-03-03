@@ -109,7 +109,7 @@ static void writeDebug(
 	for (AssemblyLine line : asmLines) {
 		if (!line.DebugLine) {
 			file <<
-				Utils::binaryString(address++, 4) << " " <<
+				Utils::binaryString(address++, 8, 4) << " " <<
 				Utils::binaryString(line.MachineCode, 8, 4);
 		} else {
 			file << "              ";
