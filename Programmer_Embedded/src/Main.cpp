@@ -21,7 +21,7 @@ void setBusValue(uint8_t data)
 void pulseClock()
 {
 	digitalWrite(PIN_CLK, HIGH);
-	delay(10 * 100);
+	delay(10);
 	digitalWrite(PIN_CLK, LOW);
 }
 
