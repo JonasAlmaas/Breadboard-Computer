@@ -8,7 +8,7 @@ enum {
 	PIN_CLK = 16, // Clock
 	PIN_MI = 17, // Memory Address Register In
 	PIN_RI = 18, // RAM In
-	PIN_PROGRAMMING_LED = 19
+	PIN_IS_PROGRAMMING = 19 // Programming led. Prevent the program counter from progressing
 };
 
 void setBusValue(uint8_t data)
@@ -64,7 +64,7 @@ void setup()
 	pinMode(PIN_CLK, OUTPUT);
 	pinMode(PIN_MI, OUTPUT);
 	pinMode(PIN_RI, OUTPUT);
-	pinMode(PIN_PROGRAMMING_LED, OUTPUT);
+	pinMode(PIN_IS_PROGRAMMING, OUTPUT);
 }
 
 int main()
@@ -98,16 +98,15 @@ int main()
 			uint8_t address = strtoul(addressStrBuffer, NULL, 16);
 			uint8_t data = strtoul(dataStrBuffer, NULL, 16);
 
-			digitalWrite(PIN_PROGRAMMING_LED, HIGH);
-			setAddress(address);
-			digitalWrite(PIN_PROGRAMMING_LED, LOW);
+			digitalWrite(PIN_IS_PROGRAMMING, HIGH);
 
-			digitalWrite(PIN_PROGRAMMING_LED, HIGH);
+			setAddress(address);
 			setData(data);
-			digitalWrite(PIN_PROGRAMMING_LED, LOW);
 
 			setBusValue(0);
 			pulseClear();
+
+			digitalWrite(PIN_IS_PROGRAMMING, LOW);
 
 			char commandFeedback[10];
 			sprintf(commandFeedback, "0x%02x:0x%02x\0", address, data);
