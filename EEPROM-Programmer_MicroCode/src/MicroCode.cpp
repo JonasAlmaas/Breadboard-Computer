@@ -25,7 +25,7 @@ enum Instructions {
 MicroCode::MicroCode(MicroCode::Specification s)
 	: m_Spec(s)
 {
-	memset(m_Data, 0, sizeof(m_Data));
+	memset(m_Data, 0, sizeof m_Data);
 
 	// 0000 - NOP - No Operation
 	m_Data[Instructions::NOP][0] = s.PCO|s.MI;

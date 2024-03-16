@@ -3,7 +3,7 @@
 #include "EEPROM.h"
 #include "MicroCode.h"
 
-#define BIT(x) (1ul << (x))
+#define BIT(x) (1U << (x))
 
 void programEEPROM(EEPROM& eeprom, const MicroCode& microCode)
 {
