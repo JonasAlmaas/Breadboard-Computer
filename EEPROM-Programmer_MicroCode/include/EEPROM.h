@@ -1,6 +1,6 @@
 #pragma once
 
-#include "MicroCode.h"
+#include <stdint.h>
 
 class EEPROM
 {
@@ -18,7 +18,7 @@ public:
 private:
 	enum IOMode
 	{
-		None = 0x0,
+		None = 0xFF,
 		Read = 0x0,
 		Write = 0x80,
 	};
@@ -28,8 +28,6 @@ public:
 
 	uint8_t ReadByte(uint16_t address);
 	void WriteByte(uint16_t address, uint8_t data);
-
-	void WriteMicroCode(const MicroCode& microCode, uint8_t eepromIndex);
 
 	/**
 	 * @brief Dumps the EEPROM contents to the serial port in chunks of 16 bytes.

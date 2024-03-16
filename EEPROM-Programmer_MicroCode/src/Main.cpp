@@ -1,8 +1,29 @@
 #include <Arduino.h>
 
 #include "EEPROM.h"
+#include "MicroCode.h"
 
 #define BIT(x) (1ul << (x))
+
+void programEEPROM(EEPROM& eeprom, const MicroCode& microCode)
+{
+	Serial.print("Programming EEPROM");
+
+	for (uint16_t address = 0; address < 2048; ++address) {
+		uint8_t segment     = (address & 0b11000000000) >> 9;
+		uint8_t flags       = (address & 0b00110000000) >> 7;
+		uint8_t instruction = (address & 0b00001111000) >> 3;
+		uint8_t t           = (address & 0b00000000111);
+
+		eeprom.WriteByte(address, microCode.GetByte(instruction, t, flags, segment));
+
+		if (address % 32 == 0) {
+			Serial.print(".");
+		}
+	}
+
+	Serial.println("done");
+}
 
 int main()
 {
@@ -39,11 +60,11 @@ int main()
 		.SFE = BIT(16),
 	});
 
-	eeprom.WriteMicroCode(microCode, 0);
+	programEEPROM(eeprom, microCode);
 
-	delay(10); // Wait after writing before reading
+	delay(100); // Wait after writing before reading
 
-	eeprom.Dump(0, 511);
+	eeprom.Dump(0, 512);
 
 	return 0;
 }

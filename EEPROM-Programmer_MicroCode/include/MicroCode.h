@@ -29,7 +29,7 @@ public:
 public:
 	MicroCode(Specification spec);
 
-	uint8_t GetByte(uint8_t instruction, uint8_t t, uint8_t flags, uint8_t eepromIndex) const;
+	uint8_t GetByte(uint8_t instruction, uint8_t t, uint8_t flags, uint8_t segment) const;
 
 private:
 	Specification m_Spec;

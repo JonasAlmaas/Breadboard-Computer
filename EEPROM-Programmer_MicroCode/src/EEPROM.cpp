@@ -59,37 +59,19 @@ void EEPROM::WriteByte(uint16_t address, uint8_t data)
 	setAddress(address);
 
 	for (uint8_t pin = m_Spec.D0; pin <= m_Spec.D7; ++pin) {
+		pinMode(pin, OUTPUT);
 		digitalWrite(pin, (data >> (pin - m_Spec.D0)) & 0x1);
 	}
 
 	digitalWrite(m_Spec.WriteEnablePin, LOW);
 	delayMicroseconds(1);
 	digitalWrite(m_Spec.WriteEnablePin, HIGH);
-	delay(1);
-}
-
-void EEPROM::WriteMicroCode(const MicroCode& microCode, uint8_t eepromIndex)
-{
-	Serial.print("Programming EEPROM");
-
-	for (uint16_t address = 0; address < 512; ++address) {
-		uint8_t flags       = (address & 0b110000000) >> 7;
-		uint8_t instruction = (address & 0b001111000) >> 3;
-		uint8_t t           = (address & 0b000000111);
-
-		WriteByte(address, microCode.GetByte(instruction, t, flags, eepromIndex));
-
-		if (address % 64 == 0) {
-			Serial.print(".");
-		}
-	}
-
-	Serial.println(" done");
+	delay(5);
 }
 
 void EEPROM::Dump(uint16_t start, uint16_t end)
 {
-	for (uint16_t base = start; base <= end; base += 16) {
+	for (uint16_t base = start; base < end; base += 16) {
 		uint8_t data[16];
 		for (uint8_t offset = 0; offset < 16; ++offset) {
 			data[offset] = ReadByte(base + offset);
