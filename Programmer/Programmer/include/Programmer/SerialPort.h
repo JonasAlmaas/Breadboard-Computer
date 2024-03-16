@@ -7,10 +7,10 @@
 class SerialPort
 {
 public:
-	SerialPort(const std::string& portName);
+	SerialPort(const std::string& portName, int raudRate);
 	~SerialPort();
 	
-	bool ReadLine(char* buf, int bufSize);
+	bool Read(char* buf, int bufSize);
 	bool Write(char* buf, int bufSize);
 	
 private:

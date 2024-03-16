@@ -31,18 +31,18 @@ namespace Utils {
 
 }
 
-int readInProgram(const std::filesystem::path &filePath, char *buffer, size_t bufferSize)
+int readInProgram(const std::filesystem::path &filePath, unsigned char *buffer, size_t bufferSize)
 {
 	std::ifstream file(filePath, std::ios::in | std::ios::binary);
 	if (!file.is_open()) {
 		std::cerr << "Error opening file" << std::endl;
 		return -1;
 	}
-	
+
 	file.read((char*)buffer, bufferSize);
 
 	if (file.gcount() == bufferSize && !file.eof()) {
-		std::cerr << "Error: Max program size if 256 bytes" << std::endl;
+		std::cerr << "Error: Max program size isu 256 bytes" << std::endl;
 		return -1;
 	}
 
@@ -65,39 +65,46 @@ int main(int argc, char** argv)
 		return 0;
 	}
 	
-	SerialPort sp(args.Table.at("-p"));
+	SerialPort sp(args.Table.at("-p"), 9600);
 
-	std::filesystem::path filePath = args.List[args.List.size() - 1];
+	std::filesystem::path filePath = args.List.back();
 
-	unsigned char buffer[256];
-	int bytesRead = readInProgram(filePath, (char*)&buffer, 256);
+	unsigned char buffer[256] = { 0 };
+	int bytesRead = readInProgram(filePath, buffer, sizeof buffer);
 
 	if (bytesRead == -1) {
 		return 1;
 	}
 
-	char programData[10];
-	char responseBuffer[256];
+	char writeData[11] = { 0 };
+	char resBuf[256] = { 0 };
 
-	std::this_thread::sleep_for(std::chrono::milliseconds(50));
+	for (int i = 0; i < bytesRead; ++i) {
+		sprintf(writeData, "0x%02x:0x%02x\n", i, (int)buffer[i]);
 
-	for (int i = 0; i < bytesRead; i++) {
-		std::cout << Utils::binaryString(i, 8, 4) << " <- " << Utils::binaryString(buffer[i], 8, 4);
-		sprintf(programData, "0x%02x:0x%02x\n", i, buffer[i]);
-		std::cout << " - " << programData;
+		std::cout
+			<< Utils::binaryString(i, 8, 4)
+			<< " <- "
+			<< Utils::binaryString(buffer[i], 8, 4)
+			<< " - "
+			<< writeData;
 
-		sp.Write(programData, 10);
+		sp.Write(writeData, strlen(writeData));
 		
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+		memset(resBuf, 0, sizeof resBuf);
+		if (!sp.Read(resBuf, sizeof resBuf)) {
+			std::cerr << "Error: Unable to read from serial port\n";
+			return 1;
+		}
 
-		//memset(responseBuffer, 0, 256);
-		//if (!sp.ReadLine(responseBuffer, 256)) {
-		//	std::cerr << "Error: Unable to read from serial port" << std::endl;
-		//	return 1;
-		//}
-
-		//std::cout << responseBuffer << std::endl;
+		if (strcmp(writeData, resBuf)) {
+			std::cerr
+				<< "Error: Data mismatch"
+				<< " - Expected: [" << writeData << "]"
+				<< " - Received: [" << resBuf << "]";
+			return 1;
+		}
 	}
-	
+
 	return 0;
 }
