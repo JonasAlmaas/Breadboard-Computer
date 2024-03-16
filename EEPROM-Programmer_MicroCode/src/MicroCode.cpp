@@ -37,7 +37,8 @@ MicroCode::MicroCode(MicroCode::Specification s)
 	m_Data[Instructions::LDA][1] = s.RO|s.II|s.PCE;
 	m_Data[Instructions::LDA][2] = s.PCO|s.MI|s.PCE;
 	m_Data[Instructions::LDA][3] = s.RO|s.MI;
-	m_Data[Instructions::LDA][4] = s.RO|s.AI|s.MCR;
+	m_Data[Instructions::LDA][4] = s.RO|s.AI;
+	m_Data[Instructions::LDA][5] = s.MCR;
 
  	// 0010 - ADD - Add
 	m_Data[Instructions::ADD][0] = s.PCO|s.MI;
@@ -45,7 +46,8 @@ MicroCode::MicroCode(MicroCode::Specification s)
 	m_Data[Instructions::ADD][2] = s.PCO|s.MI|s.PCE;
 	m_Data[Instructions::ADD][3] = s.RO|s.MI;
 	m_Data[Instructions::ADD][4] = s.RO|s.BI;
-	m_Data[Instructions::ADD][5] = s.EO|s.AI|s.SFE|s.MCR;
+	m_Data[Instructions::ADD][5] = s.EO|s.AI|s.SFE;
+	m_Data[Instructions::ADD][6] = s.MCR;
 
 	// 0011 - SUB - Subtract
 	m_Data[Instructions::SUB][0] = s.PCO|s.MI;
@@ -53,38 +55,44 @@ MicroCode::MicroCode(MicroCode::Specification s)
 	m_Data[Instructions::SUB][2] = s.PCO|s.MI|s.PCE;
 	m_Data[Instructions::SUB][3] = s.RO|s.MI;
 	m_Data[Instructions::SUB][4] = s.RO|s.BI|s.SU;
-	m_Data[Instructions::SUB][5] = s.SU|s.EO|s.AI|s.SFE|s.MCR;
+	m_Data[Instructions::SUB][5] = s.SU|s.EO|s.AI|s.SFE;
+	m_Data[Instructions::SUB][6] = s.MCR;
 
 	// 0100 - STA - Store A
 	m_Data[Instructions::STA][0] = s.PCO|s.MI;
 	m_Data[Instructions::STA][1] = s.RO|s.II|s.PCE;
 	m_Data[Instructions::STA][2] = s.PCO|s.MI|s.PCE;
 	m_Data[Instructions::STA][3] = s.RO|s.MI;
-	m_Data[Instructions::STA][4] = s.AO|s.RI|s.MCR;
+	m_Data[Instructions::STA][4] = s.AO|s.RI;
+	m_Data[Instructions::STA][5] = s.MCR;
 
 	// 0101 - LDI - Load Immediate
 	m_Data[Instructions::LDI][0] = s.PCO|s.MI;
 	m_Data[Instructions::LDI][1] = s.RO|s.II|s.PCE;
 	m_Data[Instructions::LDI][2] = s.PCO|s.MI|s.PCE;
-	m_Data[Instructions::LDI][3] = s.RO|s.AI|s.MCR;
+	m_Data[Instructions::LDI][3] = s.RO|s.AI;
+	m_Data[Instructions::LDI][4] = s.MCR;
 
 	// 0110 - JMP - Jump
 	m_Data[Instructions::JMP][0] = s.PCO|s.MI;
 	m_Data[Instructions::JMP][1] = s.RO|s.II|s.PCE;
 	m_Data[Instructions::JMP][2] = s.PCO|s.MI|s.PCE;
-	m_Data[Instructions::JMP][3] = s.RO|s.PCI|s.MCR;
+	m_Data[Instructions::JMP][3] = s.RO|s.PCI;
+	m_Data[Instructions::JMP][4] = s.MCR;
 
 	// 0111 - JC  - Jump if Carry
 	m_Data[Instructions::JC][0] = s.PCO|s.MI;
 	m_Data[Instructions::JC][1] = s.RO|s.II|s.PCE;
 	m_Data[Instructions::JC][2] = s.PCO|s.MI|s.PCE; // This gets modified dynamically in GetByte()
-	m_Data[Instructions::JC][3] = s.RO|s.PCI|s.MCR;
+	m_Data[Instructions::JC][3] = s.RO|s.PCI;
+	m_Data[Instructions::JC][4] = s.MCR;
 
 	// 1000 - JZ  - Jump if Zero
 	m_Data[Instructions::JZ][0] = s.PCO|s.MI;
 	m_Data[Instructions::JZ][1] = s.RO|s.II|s.PCE;
 	m_Data[Instructions::JZ][2] = s.PCO|s.MI|s.PCE; // This gets modified dynamically in GetByte()
-	m_Data[Instructions::JZ][3] = s.RO|s.PCI|s.MCR;
+	m_Data[Instructions::JZ][3] = s.RO|s.PCI;
+	m_Data[Instructions::JZ][4] = s.MCR;
 
 	// 1001
 	m_Data[0b1001][0] = s.PCO|s.MI;
@@ -114,12 +122,13 @@ MicroCode::MicroCode(MicroCode::Specification s)
 	// 1110 - OUT - Output
 	m_Data[Instructions::OUT][0] = s.PCO|s.MI;
 	m_Data[Instructions::OUT][1] = s.RO|s.II|s.PCE;
-	m_Data[Instructions::OUT][2] = s.AO|s.OI|s.MCR;
+	m_Data[Instructions::OUT][2] = s.AO|s.OI;
+	m_Data[Instructions::OUT][3] = s.MCR;
 
 	// 1111 - HLT - Halt
 	m_Data[Instructions::HLT][0] = s.PCO|s.MI;
 	m_Data[Instructions::HLT][1] = s.RO|s.II|s.PCE;
-	m_Data[Instructions::HLT][2] = s.HLT|s.MCR;
+	m_Data[Instructions::HLT][2] = s.HLT;
 }
 
 uint8_t MicroCode::GetByte(uint8_t instruction, uint8_t t, uint8_t flags, uint8_t segment) const
@@ -130,7 +139,7 @@ uint8_t MicroCode::GetByte(uint8_t instruction, uint8_t t, uint8_t flags, uint8_
 	if (t == 2) {
 		if ((instruction == Instructions::JC && !(flags & SRegFlags::Carry))
 				|| (instruction == Instructions::JZ && !(flags & SRegFlags::Zero))) {
-			value = m_Spec.MCR;
+			value = m_Spec.PCE|m_Spec.MCR;
 		}
 	}
 
