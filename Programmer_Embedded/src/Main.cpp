@@ -54,7 +54,7 @@ void setData(uint8_t data)
 
 void setup()
 {
-	Serial.begin(57600);
+	Serial.begin(9600, SERIAL_8N1);
 
 	for (int i = PIN_BUS0; i <= PIN_BUS7; ++i) {
 		pinMode(i, OUTPUT);
@@ -73,7 +73,7 @@ int main()
 
 	setup();
 
-	char serialBuffer[10];
+	char serialBuffer[100];
 
 	char addressStrBuffer[5];
 	char dataStrBuffer[5];
@@ -81,14 +81,17 @@ int main()
 	memset(addressStrBuffer, 0, sizeof(addressStrBuffer));
 	memset(dataStrBuffer, 0, sizeof(dataStrBuffer));
 
+	char commandFeedback[100] = { 0 }; // 11
+
 	while (true) {
 		if (Serial.available() > 0) { // Expected format: "Address:Data" (Example: "0x00:0x00")
-			Serial.readBytesUntil('\n', serialBuffer, sizeof(serialBuffer));
+			Serial.readBytesUntil('\n', serialBuffer, sizeof serialBuffer);
 
 			// Make sure the data-format is correct
 			if (serialBuffer[0] != '0' || serialBuffer[1] != 'x' || serialBuffer[4] != ':'
 					|| serialBuffer[5] != '0' || serialBuffer[6] != 'x') {
-				Serial.println("ERROR: Invalid format");
+				Serial.print("ERROR: Invalid format\n");
+				Serial.println(serialBuffer);
 				continue;
 			}
 
@@ -108,9 +111,8 @@ int main()
 
 			digitalWrite(PIN_IS_PROGRAMMING, LOW);
 
-			char commandFeedback[10];
-			sprintf(commandFeedback, "0x%02x:0x%02x\0", address, data);
-			Serial.println(commandFeedback);
+			sprintf(commandFeedback, "0x%02x:0x%02x\n\0", address, data);
+			Serial.print(commandFeedback);
 		}
 
 		delay(100);
