@@ -67,6 +67,8 @@ int main(int argc, char** argv)
 	
 	SerialPort sp(args.Table.at("-p"), 9600);
 
+	std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+
 	std::filesystem::path filePath = args.List.back();
 
 	unsigned char buffer[256] = { 0 };
