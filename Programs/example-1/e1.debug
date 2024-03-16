@@ -1,11 +1,12 @@
                       1: ; This program adds 5 to Register A in an infinite loop and outputs the result
-0000'0000 0101'0000        3: LDI 5		; Load 5 into Register A
+0000'0000 0101'0000        3: LDI 5       ; Load 5 into Register A
 0000'0001 0000'0101
-0000'0010 0100'0000        4: STA 255		; Store the value in the A Register into RAM at address 255
+0000'0010 0100'0000        4: STA 255     ; Store the value in the A Register into RAM at address 255
 0000'0011 1111'1111
-                      6: loop:
-0000'0100 0010'0000        7: ADD 255   	; Add the value at memory address 15 to Register A
-0000'0101 1111'1111
-0000'0110 1110'0000        8: OUT   		; Output the value in Register A
-0000'0111 0110'0000        9: JMP loop	; Jump up to the "loop" label to continue the loop
-0000'1000 0000'0100
+0000'0100 1110'0000        5: OUT         ; Output the value in Register A
+                      7: loop:
+0000'0101 0010'0000        8: ADD 255     ; Add the value at memory address 255 to Register A
+0000'0110 1111'1111
+0000'0111 1110'0000        9: OUT         ; Output the value in Register A
+0000'1000 0110'0000        10: JMP loop    ; Jump up to the "loop" label to continue the loop
+0000'1001 0000'0101
