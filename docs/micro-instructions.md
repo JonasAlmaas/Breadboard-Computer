@@ -43,7 +43,7 @@ Every instruction starts by running the fetch sequence.
 | 0011   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   | X   |     |     |
 | 0011   | 011&nbsp;(3) | |     | X   |     | X   |     |     |     |     |     |     |     |     |     |     |     |     |     |
 | 0011   | 100&nbsp;(4) | |     |     |     | X   |     |     |     |     | X   |     |     |     |     |     |     |     |     |
-| 0011   | 101&nbsp;(5) | |     |     |     |     |     |     | X   |     |     | X   |     |     |     |     |     | X   | X   |
+| 0011   | 101&nbsp;(5) | |     |     |     |     |     |     | X   |     |     | X   | X   |     |     |     |     | X   | X   |
 
 
 ## STA - Store A
@@ -67,41 +67,36 @@ Every instruction starts by running the fetch sequence.
 
 | Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |
+| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   | X   |     |     |
 | 0111   | 011&nbsp;(3) | |     |     |     | X   |     |     |     |     |     |     |     |     | X   |     |     | X   |     |
 
 
 ## JZ - Jump If Carry
 
-TODO: Is this logic inverted?
-
 ### Carry = 0
 | Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |
-| 0111   | 011&nbsp;(3) | |     |     |     | X   |     |     |     |     |     |     |     |     | X   |     |     | X   |     |
+| 0111   | 010&nbsp;(2) | |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
 
 ### Carry = 1
 | Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 0111   | 010&nbsp;(2) | |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
+| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   | X   |     |     |
+| 0111   | 011&nbsp;(3) | |     |     |     | X   |     |     |     |     |     |     |     |     | X   |     |     | X   |     |
 
 
 ## JZ - Jump If Zero
 
-TODO: Is this logic inverted?
-
 ### Zero = 0
-| Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
-| :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |
-| 0111   | 011&nbsp;(3) | |     |     |     | X   |     |     |     |     |     |     |     |     | X   |     |     | X   |     |
-
-### Zero = 1
 | Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | 0111   | 010&nbsp;(2) | |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
 
+### Zero = 1
+| Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
+| :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   | X   |     |     |
+| 0111   | 011&nbsp;(3) | |     |     |     | X   |     |     |     |     |     |     |     |     | X   |     |     | X   |     |
 
 
 ## OUT - Output
@@ -116,18 +111,3 @@ TODO: Is this logic inverted?
 | Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 | 1111   | 010&nbsp;(2) | | X   |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
-
-
-# Micro Instruction EEPROM Connections
-
-SG0-SG1: Segment select bits. Can be removed later if expansion is needed.
-
-| A10 | A9  | A8  | A7  | A6  | A5  | A4  | A3  | A2  | A1  | A0  |
-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| SG1 | SG0 | ZF  | CF  | OP3 | OP2 | OP1 | OP0 | t2  | t1  | t0  |
-
-| Segment      | O7  | O6  | O5  | O4  | O3  | O2  | O1  | O0  |
-| :----------: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 2 ( left )   |     |     |     |     |     |     |     | SFE |
-| 1 ( center ) | MRC | PCE | PCO | PCI | OI  | SU  | ΣO  | BI  |
-| 0 ( right )  | AO  | AI  | IO  | II  | RO  | RI  | MI  | HLT |
