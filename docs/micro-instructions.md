@@ -70,7 +70,7 @@ Every instruction starts by running the fetch sequence.
 
 | Opcode | Cycle        | | HLT | MI  | RI  | RO  | II  | IO  | AI  | AO  | BI  | ΣO  | SU  | OI  | PCI | PCO | PCE | MCR | SFE |
 | :----: | :----------: |-| :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   | X   |     |     |
+| 0111   | 010&nbsp;(2) | |     | X   |     |     |     |     |     |     |     |     |     |     |     | X   |     |     |     |
 | 0111   | 011&nbsp;(3) | |     |     |     | X   |     |     |     |     |     |     |     |     | X   |     |     |     |     |
 | 0111   | 100&nbsp;(4) | |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     | X   |     |
 

@@ -76,21 +76,21 @@ MicroCode::MicroCode(MicroCode::Specification s)
 	// 0110 - JMP - Jump
 	m_Data[Instructions::JMP][0] = s.PCO|s.MI;
 	m_Data[Instructions::JMP][1] = s.RO|s.II|s.PCE;
-	m_Data[Instructions::JMP][2] = s.PCO|s.MI|s.PCE;
+	m_Data[Instructions::JMP][2] = s.PCO|s.MI;
 	m_Data[Instructions::JMP][3] = s.RO|s.PCI;
 	m_Data[Instructions::JMP][4] = s.MCR;
 
 	// 0111 - JC  - Jump if Carry
 	m_Data[Instructions::JC][0] = s.PCO|s.MI;
 	m_Data[Instructions::JC][1] = s.RO|s.II|s.PCE;
-	m_Data[Instructions::JC][2] = s.PCO|s.MI|s.PCE; // This gets modified dynamically in GetByte()
+	m_Data[Instructions::JC][2] = s.PCO|s.MI; // This gets modified dynamically in GetByte()
 	m_Data[Instructions::JC][3] = s.RO|s.PCI;
 	m_Data[Instructions::JC][4] = s.MCR;
 
 	// 1000 - JZ  - Jump if Zero
 	m_Data[Instructions::JZ][0] = s.PCO|s.MI;
 	m_Data[Instructions::JZ][1] = s.RO|s.II|s.PCE;
-	m_Data[Instructions::JZ][2] = s.PCO|s.MI|s.PCE; // This gets modified dynamically in GetByte()
+	m_Data[Instructions::JZ][2] = s.PCO|s.MI; // This gets modified dynamically in GetByte()
 	m_Data[Instructions::JZ][3] = s.RO|s.PCI;
 	m_Data[Instructions::JZ][4] = s.MCR;
 
